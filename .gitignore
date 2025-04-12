@@ -39,3 +39,9 @@ build/
 /env/dev/.test.prod.env
 /env/prod/.db.prod.env
 /.idea/
+
+### Docker ###
+
+docker-compose.yml
+compose.prod.yml
+
