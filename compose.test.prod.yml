@@ -1,0 +1,45 @@
+version: '3.6'
+
+services:
+  app:
+    container_name: test-rentstudio-api-prod
+    image: test-rentstudio-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    hostname: host-rentstudio-api-prod
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - env/prod/.prod.env
+    ports:
+      - "6060:8080"
+
+  postgres:
+    image: postgres:15
+    restart: always
+    container_name: test-rentstudio-db-prod
+    hostname: host-test-rentstudio-db
+    env_file:
+      - env/prod/.prod.env
+    volumes:
+      - ./docker/test/postgres/data:/var/lib/postgresql/data
+      - ./docker/test/postgres/log:/var/log/postgresql
+    ports:
+      - "6061:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  cleaner:
+    build:
+      context: .
+      dockerfile: Dockerfile.cleaner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - app

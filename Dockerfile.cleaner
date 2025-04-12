@@ -1,0 +1,15 @@
+# Dockerfile.cleaner
+
+FROM alpine:latest
+
+# Instalar Docker CLI
+RUN apk add --no-cache docker-cli
+
+# Copiar el script de limpieza
+COPY clean.sh /usr/local/bin/clean.sh
+
+# Dar permisos de ejecución al script
+RUN chmod +x /usr/local/bin/clean.sh
+
+# Ejecutar el script
+ENTRYPOINT ["/usr/local/bin/clean.sh"]

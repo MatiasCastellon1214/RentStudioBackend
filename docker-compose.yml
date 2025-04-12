@@ -1,0 +1,52 @@
+services:
+  app:
+    #environment:
+    #  - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+    #  - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+    #  - LOG_LEVEL_ROOT=${LOG_LEVEL_ROOT}
+    #  - LOG_LEVEL_FRAMEWORK=${LOG_LEVEL_FRAMEWORK}
+    #  - LOG_LEVEL_PROJECT=${LOG_LEVEL_PROJECT}
+    container_name: dh-backend-spring
+    image: digitalhouse-pi:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    depends_on:
+      - postgres
+    env_file:
+      - env/dev/.dev.env
+    ports:
+      - "6061:8080"
+    networks:
+      - nginx_webnet
+
+  postgres:
+    image: postgres
+    restart: always
+    container_name: dh-backend-postgres
+    hostname: host-postgres-digitalhouse-spring
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1214 # Change to your Password
+    volumes:
+      - ./docker/postgres/data:/var/lib/postgresql/data
+      - ./docker/postgres/log:/var/log/postgresql
+      - ./sql:/docker-entrypoint-initdb.d # Modify here INIT DB
+    ports:
+      - "8082:5432"
+    networks:
+      - nginx_webnet
+
+  cleaner:
+    build:
+      context: .
+      dockerfile: Dockerfile.cleaner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - app
+
+networks:
+  nginx_webnet:
+    external: true

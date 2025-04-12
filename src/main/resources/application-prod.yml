@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    properties:
+      hibernate:
+        dialect: ${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT}
+    show-sql: ${SPRING_JPA_SHOW_SQL}
+  flyway:
+    enabled: ${FLYWAY_ENABLED}
+    locations: ${FLYWAY_LOCATIONS}
+    baseline-on-migrate: ${FLYWAY_BASELINE_ON_MIGRATE}
+    clean-disabled: ${FLYWAY_CLEAN_DISABLED}
+    out-of-order: ${FLYWAY_OUT_OF_ORDER}
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration:
+    minutes: ${JWT_EXPIRATION_MINUTES}
+  refresh:
+    expiration:
+      days: ${JWT_REFRESH_EXPIRATION_DAYS}
+
+aws:
+  accessKeyId: ${AWS_ACCESS_KEY_ID}
+  secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
+  s3:
+    bucketName: ${AWS_S3_BUCKET_NAME}
+    region: ${AWS_REGION}
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT}
+    org.springframework: ${LOG_LEVEL_FRAMEWORK}
+    proyecto.dh: ${LOG_LEVEL_PROJECT}

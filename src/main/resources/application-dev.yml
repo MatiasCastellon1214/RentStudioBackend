@@ -1,0 +1,45 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: true
+  application:
+    name: dh-backend
+  docker:
+    compose:
+      enabled: true
+      file: compose.dev.yml
+  flyway:
+    enabled: false
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration:
+    minutes: ${JWT_EXPIRATION_MINUTES}
+  refresh:
+    expiration:
+      days: ${JWT_REFRESH_EXPIRATION_DAYS}
+
+aws:
+  accessKeyId: ${AWS_ACCESS_KEY_ID}
+  secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
+  s3:
+    bucketName: ${AWS_S3_BUCKET_NAME}
+    region: ${AWS_REGION}
+
+springdoc:
+  api-docs:
+    path: /public/api-docs
+  swagger-ui:
+    path: /public/swagger-ui
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT}
+    org.springframework: ${LOG_LEVEL_FRAMEWORK}
+    proyecto.dh: ${LOG_LEVEL_PROJECT}

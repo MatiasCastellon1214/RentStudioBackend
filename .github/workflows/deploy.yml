@@ -1,0 +1,39 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, Linux, X64]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Ensure .ssh directory exists
+        run: mkdir -p ~/.ssh
+
+      - name: Add server to known hosts
+        run: ssh-keyscan -p 5664 -H ${{ secrets.DONWEB_SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        env:
+          SERVER_IP: ${{ secrets.DONWEB_SSH_HOST }}
+          SERVER_USER: ${{ secrets.DONWEB_SSH_USERNAME }}
+          SERVER_PASSWORD: ${{ secrets.DONWEB_SSH_PASSWORD }}
+        run: |
+          sshpass -p "$SERVER_PASSWORD" ssh -p 5664 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP '
+          cd /root/docker-apps/digitalhouse/backend &&
+          git reset --hard HEAD &&
+          git pull origin main &&
+          chmod +x start_containers.sh &&
+          chmod +x clean.sh &&
+          ./start_containers.sh'
