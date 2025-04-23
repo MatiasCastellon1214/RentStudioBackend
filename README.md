@@ -1,4 +1,4 @@
-# 🎨 RentStudio - RESTful API with Spring Boot
+# 📷 RentStudio - RESTful API with Spring Boot
 
 > ⚠️ This is a **copy of the backend** part of the FullStack project [RentStudio](https://github.com/RentStudioDH), originally located at [RentStudioDH on GitHub](https://github.com/RentStudioDH).
 
