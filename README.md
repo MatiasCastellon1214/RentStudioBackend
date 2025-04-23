@@ -44,3 +44,10 @@
 ## 🚧 Production Setup, Requirements and Deployment
 
 The setup, requirements, and instructions for running the project in production are **not yet available**.
+
+
+## 🎥 API Demo in action  
+
+![RentStudioDemo](docs/RentStudioBackend.gif.gif)  
+
+*(Example of the use of API endpoints added gif demo)*  
