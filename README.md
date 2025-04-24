@@ -48,6 +48,6 @@ The setup, requirements, and instructions for running the project in production 
 
 ## 🎥 API Demo in action  
 
-![RentStudioDemo](docs/RentStudioBackend.gif.gif)  
+![RentStudioDemo](docs/RentStudioBackend.gif)  
 
 *(Example of the use of API endpoints added gif demo)*  
